@@ -2,11 +2,14 @@
 
 Here is a game Tetris created with C# .Net 6.0 and WPF graphical subsystem
 # Appearance(Beta):
+# - Main Menu
+![image](https://user-images.githubusercontent.com/66406936/185000483-69a830b1-9c93-4632-9544-b5631528854e.png)
+
 # - Own Game:
-![image](https://user-images.githubusercontent.com/66406936/184934667-70077751-45e4-40e8-a4b8-9afc6c4bbdeb.png)
+![image](https://user-images.githubusercontent.com/66406936/185000665-8cb730c2-2126-4409-9a06-cccca240e44d.png)
 
 # - Pause menu:
-![image](https://user-images.githubusercontent.com/66406936/184934746-55aa77ce-46fb-44c2-8e4e-53b7ca759c11.png)
+![image](https://user-images.githubusercontent.com/66406936/185000611-ee4277fd-08f4-428f-97b3-a4100f9defb6.png)
 
 # - GameOver
-![image](https://user-images.githubusercontent.com/66406936/184934849-5146a411-1c2d-472b-91c5-2665cdce55ab.png)
+![image](https://user-images.githubusercontent.com/66406936/185000687-008e96dd-6f88-4581-96aa-a60cde9ac38f.png)
