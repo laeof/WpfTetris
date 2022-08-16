@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Tetrisdotnet/1.0.0": {
+        "runtime": {
+          "Tetrisdotnet.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Tetrisdotnet/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

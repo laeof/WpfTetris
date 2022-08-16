@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Source\Background.png" />
+    <None Remove="Source\Block-Empty.png" />
+    <None Remove="Source\Block-I.png" />
+    <None Remove="Source\Block-J.png" />
+    <None Remove="Source\Block-L.png" />
+    <None Remove="Source\Block-O.png" />
+    <None Remove="Source\Block-S.png" />
+    <None Remove="Source\Block-T.png" />
+    <None Remove="Source\Block-Z.png" />
+    <None Remove="Source\green_pressed.png" />
+    <None Remove="Source\green_unpresed.png" />
+    <None Remove="Source\Icon.ico" />
+    <None Remove="Source\red_pressed.png" />
+    <None Remove="Source\red_unpressed.png" />
+    <None Remove="Source\TileBlue.png" />
+    <None Remove="Source\TileCyan.png" />
+    <None Remove="Source\TileEmpty.png" />
+    <None Remove="Source\TileGreen.png" />
+    <None Remove="Source\TileOrange.png" />
+    <None Remove="Source\TilePurple.png" />
+    <None Remove="Source\TileRed.png" />
+    <None Remove="Source\TileYellow.png" />
+    <None Remove="Source\yellow_pressed.png" />
+    <None Remove="Source\yellow_unpredsed.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Source\background.png" />
+    <Resource Include="Source\Block-Empty.png" />
+    <Resource Include="Source\Block-I.png" />
+    <Resource Include="Source\Block-J.png" />
+    <Resource Include="Source\Block-L.png" />
+    <Resource Include="Source\Block-O.png" />
+    <Resource Include="Source\Block-S.png" />
+    <Resource Include="Source\Block-T.png" />
+    <Resource Include="Source\Block-Z.png" />
+    <Resource Include="Source\green_pressed.png" />
+    <Resource Include="Source\green_unpresed.png" />
+    <Resource Include="Source\Icon.ico" />
+    <Resource Include="Source\red_pressed.png" />
+    <Resource Include="Source\red_unpressed.png" />
+    <Resource Include="Source\TileBlue.png" />
+    <Resource Include="Source\TileCyan.png" />
+    <Resource Include="Source\TileEmpty.png" />
+    <Resource Include="Source\TileGreen.png" />
+    <Resource Include="Source\TileOrange.png" />
+    <Resource Include="Source\TilePurple.png" />
+    <Resource Include="Source\TileRed.png" />
+    <Resource Include="Source\TileYellow.png" />
+    <Resource Include="Source\yellow_pressed.png" />
+    <Resource Include="Source\yellow_unpredsed.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tetrisdotnet\Tetrisdotnet.csproj" />
+  </ItemGroup>
+
+</Project>

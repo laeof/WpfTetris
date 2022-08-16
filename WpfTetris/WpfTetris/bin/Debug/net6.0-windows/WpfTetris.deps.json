@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "WpfTetris/1.0.0": {
+        "dependencies": {
+          "Tetrisdotnet": "1.0.0"
+        },
+        "runtime": {
+          "WpfTetris.dll": {}
+        }
+      },
+      "Tetrisdotnet/1.0.0": {
+        "runtime": {
+          "Tetrisdotnet.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WpfTetris/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Tetrisdotnet/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
