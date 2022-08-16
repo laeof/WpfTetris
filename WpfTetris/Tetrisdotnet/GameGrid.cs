@@ -61,50 +61,60 @@ namespace Tetrisdotnet
             return true;
         }
 
-        private void ClearRow(int r)
+        private async Task ClearRow(int r, int num)
         {
             for (int c = 0; c < Columns; c++)
             {
-                grid[r, c] = 0;
+                await Task.Delay(5);
+                grid[r, c] = num;
             }
         }
 
-        private void MoveRowDown(int r, int numRows)
+        private async Task MoveRowDown(int r, int numRows)
         {
 
             for (int c = 0; c < Columns; c++)
             {
+                await Task.Delay(5);
                 grid[r + numRows, c] = grid[r, c];
                 grid[r, c] = 0;
             }
 
         }
-
-        public int ClearFullRows()
+        //for waitasync
+        TimeSpan timeout = new TimeSpan(0, 0, 0, 0, 200);
+        //score
+        public int Score { get; private set; }
+        public async void ClearFullRows()
         {
             int cleared = 0;
-
-            for (int r = Rows-1; r >= 0; r--)
+            bool AddScore = true;
+            for (int r = Rows - 1; r >= 0; r--)
             {
                 if (IsRowFull(r))
                 {
-                    ClearRow(r);
+                    await ClearRow(r, 8).WaitAsync(timeout);
+                    await Task.Delay(100);
+                    await ClearRow(r, 0).WaitAsync(timeout);
                     cleared++;
                 }
                 else if (cleared > 0)
                 {
-                    MoveRowDown(r, cleared);
+                    await MoveRowDown(r, cleared).WaitAsync(timeout);
+                    if (AddScore)
+                    {
+                        Score += cleared;
+                        AddScore = false;
+                    }
                 }
             }
-
-            return cleared;
         }
-        /*/// <summary>
+        /// <summary>
         /// убираем заполненную линию
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        private bool IsRowFilled(int row)
+        /*private bool IsRowFilled(int row)
         {
             int count = 0;
             for (int i = 0; i < Columns; i++)
@@ -125,24 +135,33 @@ namespace Tetrisdotnet
         /// убираем заполненную линию
         /// </summary>
         /// <param name="row"></param>
-        private Task DownRows(int row)
+        private void DownRows(int row)
         {
+
             for (int j = 0; j < Columns; j++)
             {
                 grid[row, j] = 0;
                 grid[row, j] = grid[row - 1, j];
             }
         }
+
         /// <summary>
         /// убираем заполненную линию
         /// </summary>
-        public async void ClearOneRow()
+        public  void ClearOneRow()
         {
             for (int i = 0; i < Rows; i++)
             {
                 if (IsRowFilled(i))
                 {
-                    await DownRows(i);
+
+                    /*for (int j = 0; j < Columns; j++)
+                    {
+                        grid[i, j] = 8;
+                    } 
+                    //await Task.Delay(500);
+                    
+                    DownRows(i);
                 }
             }
         }*/

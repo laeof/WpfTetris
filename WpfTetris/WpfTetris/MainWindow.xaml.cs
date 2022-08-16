@@ -10,6 +10,7 @@
     using Tetrisdotnet;
     using System.Runtime.InteropServices;
     using System.Threading;
+    using System.Windows.Threading;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,7 +26,8 @@
             new BitmapImage(new Uri("Source/TileYellow.png", UriKind.Relative)),
             new BitmapImage(new Uri("Source/TileGreen.png", UriKind.Relative)),
             new BitmapImage(new Uri("Source/TilePurple.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Source/TileRed.png", UriKind.Relative))
+            new BitmapImage(new Uri("Source/TileRed.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Source/TileWhite.png", UriKind.Relative))
                 };
 
         private readonly ImageSource[] blockImages = new ImageSource[]
@@ -138,6 +140,8 @@
             DrawHeldBlock(gameState.HeldBlock);
             ScoreText.Text = $"Score: {gameState.Score}";
         }
+       
+        
         private async Task GameLoop()
         {
             Draw(gameState);
@@ -149,7 +153,7 @@
                 int delay = Math.Max(minDelay, maxDelay - (gameState.Score * delayDecrease));
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
-                Draw(gameState);
+                t.Start();
             }
 
             if (gameState.GameOver)
@@ -168,6 +172,7 @@
             }
             if (isPaused)
             {
+                t.Stop();
                 if (e.Key != Key.Escape)
                     e.Handled = true;
                 else Continue_Click(ContinueBut, e);
@@ -207,20 +212,20 @@
                     default:
                         return;
                 }
-                Draw(gameState);
         }
 
-        private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
+        /*private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
 
-            await GameLoop();
-        }
+            //await GameLoop();
+        }*/
 
         private async void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
             gameState = new GameState();
             GameOverMenu.Visibility = Visibility.Hidden;
             GamePause.Visibility = Visibility.Hidden;
+            MainMenu.Visibility = Visibility.Hidden;
             isPaused = false;
             await GameLoop();
         }
@@ -240,8 +245,6 @@
         {
             WindowState = WindowState.Minimized;
         }
-
-
         /// <summary>
         /// maximize
         /// </summary>
@@ -355,7 +358,27 @@
         {
             GamePause.Visibility = Visibility.Hidden;
             isPaused = false;
+            t.Stop();
             await GameLoop();
+        }
+        DispatcherTimer t;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            t = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(20) };
+            t.Tick += new EventHandler(timertick);
+        }
+        private void timertick(object sender, EventArgs e)
+        {
+            Draw(gameState);
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        private void MainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            MainMenu.Visibility = Visibility.Visible;
         }
     }
 

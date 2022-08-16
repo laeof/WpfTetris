@@ -125,8 +125,13 @@
             {
                 GameGrid[p.Row, p.Column] = CurrentBlock.Id;
             }
-            Score += GameGrid.ClearFullRows();
+            GameGrid.ClearFullRows();
+
+            Score = GameGrid.Score;
+
+            //GameGrid.ClearOneRow();
             //GameGrid.ClearFullRows();
+
 
             if (IsGameOver())
             {
@@ -137,6 +142,8 @@
                 CurrentBlock = BlockQueue.GetAndUpdate();
                 CanHold = true;
             }
+
+            
         }
 
         public void MoveBlockDown()
@@ -178,6 +185,7 @@
         {
             CurrentBlock.Move(BlockDropDistance(), 0);
             PlaceBlock();
+
         }
     }
 }

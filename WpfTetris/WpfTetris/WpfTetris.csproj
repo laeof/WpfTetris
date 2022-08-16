@@ -29,6 +29,7 @@
     <None Remove="Source\TileOrange.png" />
     <None Remove="Source\TilePurple.png" />
     <None Remove="Source\TileRed.png" />
+    <None Remove="Source\TileWhite.png" />
     <None Remove="Source\TileYellow.png" />
     <None Remove="Source\yellow_pressed.png" />
     <None Remove="Source\yellow_unpredsed.png" />
@@ -56,6 +57,7 @@
     <Resource Include="Source\TileOrange.png" />
     <Resource Include="Source\TilePurple.png" />
     <Resource Include="Source\TileRed.png" />
+    <Resource Include="Source\TileWhite.png" />
     <Resource Include="Source\TileYellow.png" />
     <Resource Include="Source\yellow_pressed.png" />
     <Resource Include="Source\yellow_unpredsed.png" />
