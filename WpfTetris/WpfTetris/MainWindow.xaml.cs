@@ -11,6 +11,10 @@
     using System.Runtime.InteropServices;
     using System.Threading;
     using System.Windows.Threading;
+    using System.IO;
+    using System.Media;
+    using System.IO.Compression;
+    using System.Windows.Media.Animation;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -42,17 +46,19 @@
             new BitmapImage(new Uri("Source/Block-Z.png", UriKind.Relative))
         };
 
+        private bool isPaused = false;
+        private bool isplayed = false;
+        private MediaPlayer pl = new MediaPlayer();
+       
         private readonly Image[,] imageControls;
-        private readonly int maxDelay = 1000;
-        private readonly int minDelay = 75;
-        private readonly int delayDecrease = 25;
 
-        private GameState gameState = new GameState();
-
+        private GameState gameState = new GameState(gameLoop);
+        
         public MainWindow()
         {
             InitializeComponent();
             imageControls = SetupGameCanvas(gameState.GameGrid);
+            pl.Volume = 0.05;
         }
 
         private Image[,] SetupGameCanvas(GameGrid grid)
@@ -79,7 +85,8 @@
 
             return imageControls;
         }
-
+        
+        #region draw
         private void DrawGrid(GameGrid grid)
         {
             for (int r = 0; r < grid.Rows; r++)
@@ -140,30 +147,28 @@
             DrawHeldBlock(gameState.HeldBlock);
             ScoreText.Text = $"Score: {gameState.Score}";
         }
-       
-        
-        private async Task GameLoop()
+        #endregion
+
+        private void GameLoop(object sender, EventArgs e)
         {
-            Draw(gameState);
 
-            while (!gameState.GameOver)
+            if (!gameState.GameOver)
             {
-                if (isPaused)
-                    break;
-                int delay = Math.Max(minDelay, maxDelay - (gameState.Score * delayDecrease));
-                await Task.Delay(delay);
-                gameState.MoveBlockDown();
-                t.Start();
+                if (!isPaused)
+                {
+                    gameState.MoveBlockDown();
+                    if(gameLoop.Interval > TimeSpan.FromMilliseconds(250))
+                        gameLoop.Interval = TimeSpan.FromMilliseconds((double)((0 - (gameState.Score * gameState.Score)) / 10) + 700);
+                }
             }
-
-            if (gameState.GameOver)
+            else
             {
                 GameOverMenu.Visibility = Visibility.Visible;
                 FinalScoreText.Text = $"Score: {gameState.Score}";
             }
         }
 
-        bool isPaused = false;
+        
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (gameState.GameOver)
@@ -172,7 +177,8 @@
             }
             if (isPaused)
             {
-                t.Stop();
+                
+                gameLoop.Stop();
                 if (e.Key != Key.Escape)
                     e.Handled = true;
                 else Continue_Click(ContinueBut, e);
@@ -204,6 +210,9 @@
                     case Key.Escape:
                         if (!isPaused)
                         {
+
+                            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
+                            pl.Play();
                             isPaused = true;
                             GamePause.Visibility = Visibility.Visible;
                             CurrentScoreText.Text = $"Score: {gameState.Score}";
@@ -214,20 +223,84 @@
                 }
         }
 
-        /*private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
+        private void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
-
-            //await GameLoop();
-        }*/
-
-        private async void PlayAgain_Click(object sender, RoutedEventArgs e)
-        {
-            gameState = new GameState();
+            gameState = new GameState(gameLoop);
+            gameLoop.Interval = TimeSpan.FromMilliseconds(700);
             GameOverMenu.Visibility = Visibility.Hidden;
             GamePause.Visibility = Visibility.Hidden;
             MainMenu.Visibility = Visibility.Hidden;
             isPaused = false;
-            await GameLoop();
+            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
+            pl.Play();
+            t.Start();
+            gameLoop.Start();
+
+        }
+
+        private void Continue_Click(object sender, RoutedEventArgs e)
+        {
+            GamePause.Visibility = Visibility.Hidden;
+            isPaused = false;
+            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
+            pl.Play();
+            gameLoop.Start();
+        }
+        DispatcherTimer t;
+        static DispatcherTimer gameLoop;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            t = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(20) };
+            gameLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(700) };
+            gameLoop.Tick += new EventHandler(GameLoop);
+            t.Tick += new EventHandler(timertick);
+            username.Text = System.Environment.UserName;
+        }
+        private void timertick(object sender, EventArgs e)
+        {
+            Draw(gameState);
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
+            pl.Play();
+            Close();
+        }
+        private void MainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            //fixnotendgame
+            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
+            pl.Play();
+            MainMenu.Visibility = Visibility.Visible;
+        }
+        private void StartGame_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!isplayed)
+            {
+                pl.Open(new Uri("choocelement.wav", UriKind.Relative));
+                pl.Play();
+                isplayed = true;
+            }
+        }
+
+        private void StartGame_MouseLeave(object sender, MouseEventArgs e)
+        {
+            isplayed = false;
+        }
+
+        private void Options_Click(object sender, RoutedEventArgs e)
+        {
+
+            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
+            pl.Play();
+        }
+
+        private void Leaders_Click(object sender, RoutedEventArgs e)
+        {
+
+            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
+            pl.Play();
         }
 
         #region UI_Program
@@ -253,7 +326,7 @@
         private void Max_MouseDown(object sender, MouseButtonEventArgs e)
         {
             SwitchWindowState();
-            
+
         }
         /// <summary>
         /// max/min
@@ -282,7 +355,7 @@
         /// <param name="e"></param>
         private void Window_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-           
+
             if (mRestoreIfMove)
             {
                 mRestoreIfMove = false;
@@ -334,7 +407,7 @@
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                
+
                 if (e.ClickCount == 2)
                 {
                     SwitchWindowState();
@@ -352,34 +425,6 @@
 
         #endregion
 
-
-
-        private async void Continue_Click(object sender, RoutedEventArgs e)
-        {
-            GamePause.Visibility = Visibility.Hidden;
-            isPaused = false;
-            t.Stop();
-            await GameLoop();
-        }
-        DispatcherTimer t;
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            t = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(20) };
-            t.Tick += new EventHandler(timertick);
-        }
-        private void timertick(object sender, EventArgs e)
-        {
-            Draw(gameState);
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-        private void MainMenu_Click(object sender, RoutedEventArgs e)
-        {
-            MainMenu.Visibility = Visibility.Visible;
-        }
     }
 
 }

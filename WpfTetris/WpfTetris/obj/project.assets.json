@@ -35,11 +35,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\laoef\\source\\repos\\WpfTetris\\WpfTetris\\WpfTetris.csproj",
+      "projectUniqueName": "C:\\Users\\laoef\\Documents\\GitHub\\WpfTetris\\WpfTetris\\WpfTetris\\WpfTetris.csproj",
       "projectName": "WpfTetris",
-      "projectPath": "C:\\Users\\laoef\\source\\repos\\WpfTetris\\WpfTetris\\WpfTetris.csproj",
+      "projectPath": "C:\\Users\\laoef\\Documents\\GitHub\\WpfTetris\\WpfTetris\\WpfTetris\\WpfTetris.csproj",
       "packagesPath": "C:\\Users\\laoef\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\laoef\\source\\repos\\WpfTetris\\WpfTetris\\obj\\",
+      "outputPath": "C:\\Users\\laoef\\Documents\\GitHub\\WpfTetris\\WpfTetris\\WpfTetris\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\laoef\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -56,8 +56,8 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "C:\\Users\\laoef\\source\\repos\\WpfTetris\\Tetrisdotnet\\Tetrisdotnet.csproj": {
-              "projectPath": "C:\\Users\\laoef\\source\\repos\\WpfTetris\\Tetrisdotnet\\Tetrisdotnet.csproj"
+            "C:\\Users\\laoef\\Documents\\GitHub\\WpfTetris\\WpfTetris\\Tetrisdotnet\\Tetrisdotnet.csproj": {
+              "projectPath": "C:\\Users\\laoef\\Documents\\GitHub\\WpfTetris\\WpfTetris\\Tetrisdotnet\\Tetrisdotnet.csproj"
             }
           }
         }

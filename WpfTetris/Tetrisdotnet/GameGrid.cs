@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using System.Threading.Tasks;
 using System.Windows.Threading;
 using System;
+using System.Windows.Media;
 
 namespace Tetrisdotnet
 {
@@ -17,12 +16,16 @@ namespace Tetrisdotnet
             get => grid[r, c];
             set => grid[r, c] = value;
         }
+        DispatcherTimer gameLoop;
 
-        public GameGrid(int rows, int columns)
+        MediaPlayer pl = new MediaPlayer();
+        public GameGrid(int rows, int columns, DispatcherTimer dt)
         {
             Rows = rows;
             Columns = columns;
             grid = new int[rows, columns];
+            gameLoop = dt;
+            pl.Volume -= 0.2;
         }
 
         public bool IsInside(int r, int c)
@@ -81,89 +84,42 @@ namespace Tetrisdotnet
             }
 
         }
-        //for waitasync
-        TimeSpan timeout = new TimeSpan(0, 0, 0, 0, 200);
+        
         //score
+        public bool RowIsFull = false;
         public int Score { get; private set; }
         public async void ClearFullRows()
         {
             int cleared = 0;
             bool AddScore = true;
+            //for waitasync
+            TimeSpan timeout = new TimeSpan(0, 0, 0, 0, 200);
             for (int r = Rows - 1; r >= 0; r--)
             {
                 if (IsRowFull(r))
                 {
+                    RowIsFull = true;
                     await ClearRow(r, 8).WaitAsync(timeout);
-                    await Task.Delay(100);
+                    pl.Open(new Uri("WhiteClear.wav", UriKind.Relative));
+                    pl.Play();
+                    await Task.Delay(5);
                     await ClearRow(r, 0).WaitAsync(timeout);
+                    
                     cleared++;
                 }
                 else if (cleared > 0)
                 {
+                    gameLoop.Stop();
                     await MoveRowDown(r, cleared).WaitAsync(timeout);
+                    gameLoop.Start();
                     if (AddScore)
                     {
                         Score += cleared;
                         AddScore = false;
                     }
                 }
+                RowIsFull = false;
             }
         }
-        /// <summary>
-        /// убираем заполненную линию
-        /// </summary>
-        /// <param name="row"></param>
-        /// <returns></returns>
-        /*private bool IsRowFilled(int row)
-        {
-            int count = 0;
-            for (int i = 0; i < Columns; i++)
-            {
-                if (grid[row, i] != 0)
-                {
-                    count++;
-                }
-                else count--;
-            }
-            if (count == Columns)
-            {
-                return true;
-            }
-            else return false;
-        }
-        /// <summary>
-        /// убираем заполненную линию
-        /// </summary>
-        /// <param name="row"></param>
-        private void DownRows(int row)
-        {
-
-            for (int j = 0; j < Columns; j++)
-            {
-                grid[row, j] = 0;
-                grid[row, j] = grid[row - 1, j];
-            }
-        }
-
-        /// <summary>
-        /// убираем заполненную линию
-        /// </summary>
-        public  void ClearOneRow()
-        {
-            for (int i = 0; i < Rows; i++)
-            {
-                if (IsRowFilled(i))
-                {
-
-                    /*for (int j = 0; j < Columns; j++)
-                    {
-                        grid[i, j] = 8;
-                    } 
-                    //await Task.Delay(500);
-                    
-                    DownRows(i);
-                }
-            }
-        }*/
     }
 }

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\laoef\\source\\repos\\WpfTetris\\Tetrisdotnet\\Tetrisdotnet.csproj",
+      "projectUniqueName": "C:\\Users\\laoef\\Documents\\GitHub\\WpfTetris\\WpfTetris\\Tetrisdotnet\\Tetrisdotnet.csproj",
       "projectName": "Tetrisdotnet",
-      "projectPath": "C:\\Users\\laoef\\source\\repos\\WpfTetris\\Tetrisdotnet\\Tetrisdotnet.csproj",
+      "projectPath": "C:\\Users\\laoef\\Documents\\GitHub\\WpfTetris\\WpfTetris\\Tetrisdotnet\\Tetrisdotnet.csproj",
       "packagesPath": "C:\\Users\\laoef\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\laoef\\source\\repos\\WpfTetris\\Tetrisdotnet\\obj\\",
+      "outputPath": "C:\\Users\\laoef\\Documents\\GitHub\\WpfTetris\\WpfTetris\\Tetrisdotnet\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\laoef\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -155,22 +155,30 @@
                     <Button Content="Play Again"
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
+                            MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
                         Padding="5"
                         Click="PlayAgain_Click"/>
                     <Button Content="Main Menu"
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
+                            MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
                         Padding="5"
                         Click="MainMenu_Click"/>
                 </StackPanel>
             </Grid>
             <Grid   x:Name="GamePause"
-                    Opacity=".80"
+                    Opacity=".8"
                     Grid.RowSpan="2"
                     Grid.ColumnSpan="3"
                     Grid.Row="1"
                     Visibility="hidden">
-                <Border Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="30" PreviewMouseMove="Window_PreviewMouseMove" PreviewMouseDown="Border_PreviewMouseDown">
+                <Border Grid.RowSpan="2" 
+                        Grid.ColumnSpan="3" 
+                        CornerRadius="30"
+                        PreviewMouseMove="Window_PreviewMouseMove" 
+                        PreviewMouseDown="Border_PreviewMouseDown">
                     <Border.Background>
                         <LinearGradientBrush>
                             <GradientStop Color="#FF6D3AA2" Offset="0.99"/>
@@ -178,35 +186,41 @@
                         </LinearGradientBrush>
                     </Border.Background>
                 </Border>
-                
+
                 <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                        <TextBlock Text="Game is paused"
+                    <TextBlock Text="Game is paused"
                            FontSize="55"
                            TextAlignment="Center"/>
 
-                        <TextBlock x:Name="CurrentScoreText"
+                    <TextBlock x:Name="CurrentScoreText"
                            Text="Score: "
                            FontSize="45"
                            Margin="0,20,0,20"
                            TextAlignment="Center"/>
 
-                        <Button x:Name="ContinueBut"
+                    <Button x:Name="ContinueBut"
                         Content="Continue"
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
+                                MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
                         Padding="5"
                         Click="Continue_Click"/>
 
-                        <Button Content="Restart"
+                    <Button Content="Restart"
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
+                                MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
                         Padding="5"
                         Click="PlayAgain_Click"/>
 
-                        <Button Content="Main Menu"
+                    <Button Content="Main Menu"
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
+                                MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
                         Padding="5"
                         Click="MainMenu_Click"/>
                 </StackPanel>
@@ -230,9 +244,13 @@
                     <TextBlock Text="Welcome to Tetris"
                            FontSize="70"
                            TextAlignment="Center"/>
-
+                    <TextBlock Text="Unknown"
+                           x:Name="username"
+                           Foreground="GreenYellow"
+                           FontSize="70"
+                           TextAlignment="Center"/>
                     <TextBlock x:Name="BestScore"
-                           Text="Your Best Score: "
+                           Text="Your Best Score: 0"
                            Margin="0,20,0,20"
                            FontSize="36"
                            TextAlignment="Center"/>
@@ -242,20 +260,30 @@
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
                         Padding="5"
+                            MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
                         Click="PlayAgain_Click"/>
                     <Button Content="Leaders"
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
+                            MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
+                            Click="Leaders_Click"
                         Padding="5"/>
                     <Button Content="Options"
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
+                            MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
+                            Click="Options_Click"
                         Padding="5"/>
 
                     <Button Content="Exit Game"
                         Background="LightSteelBlue"
                         Margin="0,20,0,0"
                         Padding="5"
+                            MouseMove="StartGame_MouseMove"
+                            MouseLeave="StartGame_MouseLeave"
                         Click="Exit_Click"/>
                 </StackPanel>
             </Grid>

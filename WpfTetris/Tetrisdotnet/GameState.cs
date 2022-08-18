@@ -1,4 +1,10 @@
-﻿namespace Tetrisdotnet
+﻿using System;
+using System.Media;
+using System.Threading;
+using System.Windows.Media;
+using System.Windows.Threading;
+
+namespace Tetrisdotnet
 {
     public class GameState
     {
@@ -31,12 +37,15 @@
         public Block HeldBlock { get; private set; }
         public bool CanHold { get; private set; }
 
-        public GameState()
+        MediaPlayer pl = new MediaPlayer();
+
+        public GameState(DispatcherTimer gl)
         {
-            GameGrid = new GameGrid(22, 10);
+            GameGrid = new GameGrid(22, 10, gl);
             BlockQueue = new BlockQueue();
             CurrentBlock = BlockQueue.GetAndUpdate();
             CanHold = true;
+            pl.Volume -= 0.2;
         }
 
         private bool BlockFits()
@@ -119,6 +128,7 @@
             return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
         }
 
+        
         private void PlaceBlock()
         {
             foreach (Position p in CurrentBlock.TilePositions())
@@ -126,7 +136,6 @@
                 GameGrid[p.Row, p.Column] = CurrentBlock.Id;
             }
             GameGrid.ClearFullRows();
-
             Score = GameGrid.Score;
 
             //GameGrid.ClearOneRow();
@@ -142,14 +151,17 @@
                 CurrentBlock = BlockQueue.GetAndUpdate();
                 CanHold = true;
             }
+            if (!GameGrid.RowIsFull)
+            {
+                pl.Open(new Uri("FallElement.wav", UriKind.Relative));
+                pl.Play();
+            }
 
-            
         }
-
+        
         public void MoveBlockDown()
         {
             CurrentBlock.Move(1, 0);
-
             if (!BlockFits())
             {
                 CurrentBlock.Move(-1, 0);

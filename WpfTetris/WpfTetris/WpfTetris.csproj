@@ -17,6 +17,7 @@
     <None Remove="Source\Block-S.png" />
     <None Remove="Source\Block-T.png" />
     <None Remove="Source\Block-Z.png" />
+    <None Remove="Source\choocelement.wav" />
     <None Remove="Source\green_pressed.png" />
     <None Remove="Source\green_unpresed.png" />
     <None Remove="Source\Icon.ico" />

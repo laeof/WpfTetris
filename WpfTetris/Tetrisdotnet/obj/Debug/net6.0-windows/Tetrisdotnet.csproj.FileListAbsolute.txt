@@ -10,3 +10,15 @@ C:\Users\laoef\source\repos\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetr
 C:\Users\laoef\source\repos\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\refint\Tetrisdotnet.dll
 C:\Users\laoef\source\repos\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetrisdotnet.pdb
 C:\Users\laoef\source\repos\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\ref\Tetrisdotnet.dll
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\bin\Debug\net6.0-windows\Tetrisdotnet.deps.json
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\bin\Debug\net6.0-windows\Tetrisdotnet.dll
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\bin\Debug\net6.0-windows\Tetrisdotnet.pdb
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetrisdotnet.csproj.AssemblyReference.cache
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetrisdotnet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetrisdotnet.AssemblyInfoInputs.cache
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetrisdotnet.AssemblyInfo.cs
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetrisdotnet.csproj.CoreCompileInputs.cache
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetrisdotnet.dll
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\refint\Tetrisdotnet.dll
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\Tetrisdotnet.pdb
+C:\Users\laoef\Documents\GitHub\WpfTetris\WpfTetris\Tetrisdotnet\obj\Debug\net6.0-windows\ref\Tetrisdotnet.dll
