@@ -5,6 +5,9 @@ Here is a game Tetris created with C# .Net 6.0 and WPF graphical subsystem
 # - Main Menu
 ![image](https://user-images.githubusercontent.com/66406936/185000483-69a830b1-9c93-4632-9544-b5631528854e.png)
 
+# - Options
+![image](https://user-images.githubusercontent.com/66406936/185514452-92d578bf-4de3-424a-b467-fa899d56a432.png)
+
 # - Own Game:
 ![image](https://user-images.githubusercontent.com/66406936/185000665-8cb730c2-2126-4409-9a06-cccca240e44d.png)
 
