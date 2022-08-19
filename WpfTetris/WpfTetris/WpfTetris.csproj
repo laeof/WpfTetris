@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <None Remove="Source\Background.png" />
+    <None Remove="Source\Back_pressed.png" />
+    <None Remove="Source\Back_unpressed.png" />
     <None Remove="Source\Block-Empty.png" />
     <None Remove="Source\Block-I.png" />
     <None Remove="Source\Block-J.png" />
@@ -38,6 +40,8 @@
 
   <ItemGroup>
     <Resource Include="Source\background.png" />
+    <Resource Include="Source\Back_pressed.png" />
+    <Resource Include="Source\Back_unpressed.png" />
     <Resource Include="Source\Block-Empty.png" />
     <Resource Include="Source\Block-I.png" />
     <Resource Include="Source\Block-J.png" />

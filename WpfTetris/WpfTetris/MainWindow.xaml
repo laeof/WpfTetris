@@ -8,17 +8,20 @@
         Title="Tetris" Height="950" Width="800"
         MinWidth="740" MinHeight="800"
         Foreground="White"
-        FontFamily="Helvetica" FontSize="28"
+        FontFamily="Helvetica" 
+        FontWeight="Light"
+        FontSize="28"
         Background ="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode ="CanResizeWithGrip"
         Loaded="Window_Loaded"
-        KeyDown="Window_KeyDown">
+        KeyDown="Window_KeyDown"
+        PreviewKeyDown="Options_PreviewKeyDown">
     <Grid>
 
         <Grid>
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="auto"/>
@@ -83,55 +86,53 @@
                     </Image>
                 </StackPanel>
             </Grid>
-            
-            <Viewbox Grid.Row="2"
-                 Grid.Column="1"
-                 Margin="0,0,0,20">
-                <Canvas x:Name="GameCanvas"
-                        
+
+            <Viewbox    Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="0,0,0,20">
+                <Canvas x:Name="GameCanvas"    
                     Background="Transparent"
                     Width="250"
                     Height="510"
                     ClipToBounds="True"/>
             </Viewbox>
 
-            <TextBlock x:Name="ScoreText"
-                   Grid.Row="1"
-                   Grid.Column="1"
-                   Text="Score: "
-                   Margin="0, 10"
-                   TextAlignment="Center"/>
+            <TextBlock  x:Name="ScoreText"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="Score: "
+                        Margin="0, 10"
+                        TextAlignment="Center"/>
 
             <StackPanel Grid.Row="2"
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right">
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right">
                 <TextBlock Text="Hold"
-                       TextAlignment="Center"/>
-
+                        TextAlignment="Center"/>
                 <Image x:Name="HoldImage"
-                   Margin="20"
-                   Width="125"/>
+                       Margin="20"
+                       Width="125"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2"
-                    Grid.Column="2"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Left">
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
                 <TextBlock Text="Next"
-                       TextAlignment="Center"/>
+                        TextAlignment="Center"/>
 
                 <Image x:Name="NextImage"
-                   Margin="20"
-                   Width="125"/>
+                       Margin="20"
+                       Width="125"/>
             </StackPanel>
 
-            <Grid x:Name="GameOverMenu"
-                  Opacity=".80"
-              Grid.RowSpan="2"
-              Grid.ColumnSpan="3"
-                  Grid.Row="1"
-              Visibility="hidden">
+            <Grid   x:Name="GameOverMenu"
+                    Opacity=".80"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="1"
+                    Visibility="hidden">
                 <Border Grid.RowSpan="3" Grid.ColumnSpan="3" CornerRadius="30" PreviewMouseMove="Window_PreviewMouseMove" PreviewMouseDown="Border_PreviewMouseDown">
                     <Border.Background>
                         <LinearGradientBrush>
@@ -141,31 +142,33 @@
                     </Border.Background>
                 </Border>
                 <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                    <TextBlock Text="Game Over"
-                           FontSize="55"
-                           TextAlignment="Center"/>
+                            VerticalAlignment="Center">
+                    <TextBlock  Text="Game Over"
+                                FontSize="55"
+                                TextAlignment="Center"/>
 
                     <TextBlock x:Name="FinalScoreText"
-                           Text="Score: "
-                           Margin="0,20,0,20"
-                           FontSize="45"
-                           TextAlignment="Center"/>
+                               Text="Score: "
+                               Margin="0,20,0,20"
+                               FontSize="45"
+                               TextAlignment="Center"/>
 
                     <Button Content="Play Again"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0"  
+                            Height="100"
                             MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
-                        Padding="5"
-                        Click="PlayAgain_Click"/>
+                            Padding="5"
+                            Click="PlayAgain_Click"/>
                     <Button Content="Main Menu"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0" 
+                            Height="100"
                             MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
-                        Padding="5"
-                        Click="MainMenu_Click"/>
+                            Padding="5"
+                            Click="MainMenu_Click"/>
                 </StackPanel>
             </Grid>
             <Grid   x:Name="GamePause"
@@ -188,48 +191,51 @@
                 </Border>
 
                 <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
+                            VerticalAlignment="Center">
                     <TextBlock Text="Game is paused"
-                           FontSize="55"
-                           TextAlignment="Center"/>
+                               FontSize="55"
+                               TextAlignment="Center"/>
 
                     <TextBlock x:Name="CurrentScoreText"
-                           Text="Score: "
-                           FontSize="45"
-                           Margin="0,20,0,20"
-                           TextAlignment="Center"/>
+                               Text="Score: "
+                               FontSize="45"
+                               Margin="0,20,0,20"
+                               TextAlignment="Center"/>
 
                     <Button x:Name="ContinueBut"
-                        Content="Continue"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
-                                MouseMove="StartGame_MouseMove"
+                            Content="Continue"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0"    
+                            Height="100"
+                            MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
-                        Padding="5"
-                        Click="Continue_Click"/>
+                            Padding="5"
+                            Click="Continue_Click"/>
 
                     <Button Content="Restart"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
-                                MouseMove="StartGame_MouseMove"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0"
+                            MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
-                        Padding="5"
-                        Click="PlayAgain_Click"/>
+                            Padding="5"  
+                            Height="100"
+                            Click="PlayAgain_Click"/>
 
                     <Button Content="Main Menu"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
-                                MouseMove="StartGame_MouseMove"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0"
+                            MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
-                        Padding="5"
-                        Click="MainMenu_Click"/>
+                            Padding="5" 
+                            Height="100"
+                            Click="MainMenu_Click"/>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="MainMenu"
-              Grid.RowSpan="2"
-              Grid.ColumnSpan="3"
-                  Grid.Row="1"
-              Visibility="visible">
+            <Grid   x:Name="MainMenu"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="1"
+                    Visibility="visible">
                 <Border Grid.RowSpan="2" Grid.ColumnSpan="3" CornerRadius="30" PreviewMouseMove="Window_PreviewMouseMove" PreviewMouseDown="Border_PreviewMouseDown">
                     <Border.Background>
                         <LinearGradientBrush>
@@ -240,52 +246,275 @@
                 </Border>
 
                 <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                    <TextBlock Text="Welcome to Tetris"
-                           FontSize="70"
-                           TextAlignment="Center"/>
+                            VerticalAlignment="Center">
+                    <TextBlock  Text="Welcome to Tetris"
+                                FontSize="70"
+                                TextAlignment="Center"/>
                     <TextBlock Text="Unknown"
-                           x:Name="username"
-                           Foreground="GreenYellow"
-                           FontSize="70"
-                           TextAlignment="Center"/>
+                               x:Name="username"
+                               Foreground="GreenYellow"
+                               FontSize="70"
+                               TextAlignment="Center"/>
                     <TextBlock x:Name="BestScore"
-                           Text="Your Best Score: 0"
-                           Margin="0,20,0,20"
-                           FontSize="36"
-                           TextAlignment="Center"/>
+                               Text="Your Best Score: 0"
+                               Margin="0,20,0,20"
+                               FontSize="36"
+                               TextAlignment="Center"/>
 
                     <Button x:Name="StartGame"
-                        Content="New Game"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
-                        Padding="5"
+                            Content="New Game"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0"
+                            Padding="5"  
+                            Height="100"
                             MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
-                        Click="PlayAgain_Click"/>
+                            Click="PlayAgain_Click"/>
                     <Button Content="Leaders"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0"
+                            Height="100"
                             MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
                             Click="Leaders_Click"
-                        Padding="5"/>
+                            Padding="5"/>
                     <Button Content="Options"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0"
+                            Height="100"
                             MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
                             Click="Options_Click"
-                        Padding="5"/>
+                            Padding="5"/>
 
                     <Button Content="Exit Game"
-                        Background="LightSteelBlue"
-                        Margin="0,20,0,0"
-                        Padding="5"
+                            Background="LightSteelBlue"
+                            Margin="0,20,0,0"
+                            Padding="5"     
+                            Height="100"
                             MouseMove="StartGame_MouseMove"
                             MouseLeave="StartGame_MouseLeave"
-                        Click="Exit_Click"/>
+                            Click="Exit_Click"/>
                 </StackPanel>
+            </Grid>
+            <Grid x:Name="Options"
+                  Grid.RowSpan="2"
+                  Grid.ColumnSpan="3"
+                  Grid.Row="1"
+                  Visibility="hidden"
+                  PreviewKeyDown="Options_PreviewKeyDown">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.RowSpan="3" Grid.ColumnSpan="2" CornerRadius="30" PreviewMouseMove="Window_PreviewMouseMove" PreviewMouseDown="Border_PreviewMouseDown">
+                    <Border.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#FF6D3AA2" Offset="0.99"/>
+                            <GradientStop Color="#FF3E58E0" Offset="0.2"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+
+                <Viewbox Grid.RowSpan="3" Grid.ColumnSpan="2">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="Back" Height="70" Width="70" Margin="30,0,50,5" MouseDown="LeaveOptions_Click" MouseMove="StartGame_MouseMove" MouseLeave="StartGame_MouseLeave">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="Source/Back_unpressed.png"/>
+                                        <Setter Property="Focusable" Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=Back}" Value="True">
+                                                <Setter Property="Source" Value="Source/Back_pressed.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <TextBlock Text="Settings"
+                                       Margin="90,0,0,0"
+                                       FontSize="70"
+                                       Grid.Row="0"
+                                       Grid.ColumnSpan="2"
+                                       TextAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+
+                        </StackPanel>
+                        <Border     BorderThickness="0.2"
+                                    BorderBrush="White"/>
+                        
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Row="1">
+
+                            <TextBlock Text="Sound"
+                                       Margin="25,0,25,0"
+                                       FontSize="70"
+                                       Grid.Column="0"
+                                       TextAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            <Slider x:Name="SliderVolume"
+                                    Margin="80,0,0,0"
+                                    Width="350"
+                                    Minimum="1" 
+                                    Maximum="5" 
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    ValueChanged="Slider_ValueChanged"/>
+                        </StackPanel>
+                        <Border 
+                                    BorderThickness="0.2"
+                                    BorderBrush="White"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Row="2">
+
+                            <TextBlock Text="Controls"
+                                       Margin="0,0,40,0"
+                                       FontSize="70"
+                                       Grid.Column="0"
+                                       TextAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            <Border BorderThickness="0.2"
+                                    BorderBrush="White"/>
+                            <StackPanel
+                                Margin="0,0,10,0"
+                                Orientation="Vertical">
+                                <TextBlock Text="Left"
+                                           Margin="20,15,0,15"
+                                           FontSize="70"
+                                           Grid.Row="2"
+                                           VerticalAlignment="Top"/>
+
+                                <TextBlock Text="Right"
+                                           Margin="20,0,0,15"
+                                           FontSize="70"
+                                           Grid.Row="2"
+                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="Down"
+                                           Margin="20,0,0,15"
+                                           FontSize="70"
+                                           Grid.Row="2"
+                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="Drop"
+                                           Margin="20,0,0,15"
+                                           FontSize="70"
+                                           Grid.Row="2"
+                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="CCW"
+                                           Margin="20,0,0,15"
+                                           FontSize="70"
+                                           Grid.Row="2"
+                                           VerticalAlignment="Top"/>
+                                <TextBlock 
+                                           Text="Hold"
+                                           Margin="20,0,0,15"
+                                           FontSize="70"
+                                           Grid.Row="2"
+                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="CW"
+                                           Margin="20,0,0,15"
+                                           FontSize="70"
+                                           Grid.Row="2"
+                                           VerticalAlignment="Top"/>
+                            </StackPanel>
+                            <Border BorderThickness="0.2"
+                                    BorderBrush="White"/>
+                            <StackPanel Orientation="Vertical"
+                                        Margin="10,0,10,0">
+
+                                <Button x:Name="LeftPosition"
+                                        Content="A"
+                                        Click="OptionChange_Click" 
+                                    
+                                        Margin="0,15,0,15"
+                                        FontSize="60"
+                                        Height="84"
+                                        Grid.Row="2"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Center"
+                                        MouseLeave="StartGame_MouseLeave"
+                                        MouseMove="StartGame_MouseMove"/>
+                                <Button x:Name="RightPosition"
+                                        Content="D"
+                                        Margin="0,0,0,15"
+                                        FontSize="60"
+                                        Click="OptionChange_Click"
+                                        Height="84"
+                                        Grid.Row="2"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Center"
+                                        MouseLeave="StartGame_MouseLeave"
+                                        MouseMove="StartGame_MouseMove"/>
+
+                                <Button x:Name="DownPosition"
+                                        Content="S"
+                                        Margin="0,0,0,15"
+                                        FontSize="60"
+                                        Click="OptionChange_Click"
+                                        Height="84"
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Center"
+                                        MouseLeave="StartGame_MouseLeave"
+                                        MouseMove="StartGame_MouseMove"
+                                        VerticalAlignment="Top"/>
+                                <Button x:Name="Drop"
+                                        Content="Space"
+                                        Click="OptionChange_Click"
+                                        Margin="0,0,0,15"
+                                        FontSize="60"
+                                        Height="84"
+                                        Width="170"
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Center"
+                                        MouseLeave="StartGame_MouseLeave"
+                                        MouseMove="StartGame_MouseMove"
+                                        VerticalAlignment="Top"/>
+                                <Button x:Name="CCW"
+                                        Content="E"
+                                        Click="OptionChange_Click"
+                                        Margin="0,0,0,15"
+                                        FontSize="60"
+                                        Height="84"
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Center"
+                                        MouseLeave="StartGame_MouseLeave"
+                                        MouseMove="StartGame_MouseMove"
+                                        VerticalAlignment="Top"/>
+                                <Button x:Name="Hold"
+                                        Content="Q"
+                                        Click="OptionChange_Click"
+                                        Margin="0,0,0,15"
+                                        FontSize="60"
+                                        Height="84"
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Center"
+                                        MouseLeave="StartGame_MouseLeave"
+                                        MouseMove="StartGame_MouseMove"
+                                        VerticalAlignment="Top"/>
+                                <Button x:Name="CW"
+                                        Content="W"
+                                        Click="OptionChange_Click"
+                                        Margin="0,0,0,15"
+                                        FontSize="60"
+                                        Height="84"
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Center"
+                                        MouseLeave="StartGame_MouseLeave"
+                                        MouseMove="StartGame_MouseMove"
+                                        VerticalAlignment="Top"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Viewbox>
             </Grid>
         </Grid>
     </Grid>

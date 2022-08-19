@@ -2,6 +2,7 @@
 using System.Windows.Threading;
 using System;
 using System.Windows.Media;
+using System.Windows;
 
 namespace Tetrisdotnet
 {
@@ -19,13 +20,16 @@ namespace Tetrisdotnet
         DispatcherTimer gameLoop;
 
         MediaPlayer pl = new MediaPlayer();
-        public GameGrid(int rows, int columns, DispatcherTimer dt)
+
+        public double Volume;
+
+        public GameGrid(int rows, int columns, DispatcherTimer dt, double volume)
         {
             Rows = rows;
             Columns = columns;
             grid = new int[rows, columns];
             gameLoop = dt;
-            pl.Volume -= 0.2;
+            Volume = volume;
         }
 
         public bool IsInside(int r, int c)
@@ -84,7 +88,13 @@ namespace Tetrisdotnet
             }
 
         }
-        
+        private void PlaySound()
+        {
+            pl.Close();
+            pl.Open(new Uri("WhiteClear.wav", UriKind.Relative));
+            pl.Volume = Volume;
+            pl.Play();
+        }
         //score
         public bool RowIsFull = false;
         public int Score { get; private set; }
@@ -93,15 +103,14 @@ namespace Tetrisdotnet
             int cleared = 0;
             bool AddScore = true;
             //for waitasync
-            TimeSpan timeout = new TimeSpan(0, 0, 0, 0, 200);
+            TimeSpan timeout = new TimeSpan(0, 0, 0, 0, 250);
             for (int r = Rows - 1; r >= 0; r--)
             {
                 if (IsRowFull(r))
                 {
                     RowIsFull = true;
                     await ClearRow(r, 8).WaitAsync(timeout);
-                    pl.Open(new Uri("WhiteClear.wav", UriKind.Relative));
-                    pl.Play();
+                    PlaySound();
                     await Task.Delay(5);
                     await ClearRow(r, 0).WaitAsync(timeout);
                     
@@ -110,7 +119,11 @@ namespace Tetrisdotnet
                 else if (cleared > 0)
                 {
                     gameLoop.Stop();
-                    await MoveRowDown(r, cleared).WaitAsync(timeout);
+                    try
+                    {
+                        await MoveRowDown(r, cleared).WaitAsync(timeout);
+                    }
+                    catch (Exception e){ MessageBox.Show(e.Message); }
                     gameLoop.Start();
                     if (AddScore)
                     {

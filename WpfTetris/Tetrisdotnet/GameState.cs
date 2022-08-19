@@ -39,13 +39,15 @@ namespace Tetrisdotnet
 
         MediaPlayer pl = new MediaPlayer();
 
-        public GameState(DispatcherTimer gl)
+        public double Volume;
+
+        public GameState(DispatcherTimer gl, double volume)
         {
-            GameGrid = new GameGrid(22, 10, gl);
+            GameGrid = new GameGrid(22, 10, gl, volume);
             BlockQueue = new BlockQueue();
             CurrentBlock = BlockQueue.GetAndUpdate();
             CanHold = true;
-            pl.Volume -= 0.2;
+            Volume = volume;
         }
 
         private bool BlockFits()
@@ -128,7 +130,13 @@ namespace Tetrisdotnet
             return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
         }
 
-        
+        private void PlaySound()
+        {
+            pl.Close();
+            pl.Open(new Uri("FallElement.wav", UriKind.Relative));
+            pl.Volume = Volume;
+            pl.Play();
+        }
         private void PlaceBlock()
         {
             foreach (Position p in CurrentBlock.TilePositions())
@@ -153,8 +161,7 @@ namespace Tetrisdotnet
             }
             if (!GameGrid.RowIsFull)
             {
-                pl.Open(new Uri("FallElement.wav", UriKind.Relative));
-                pl.Play();
+                PlaySound();
             }
 
         }

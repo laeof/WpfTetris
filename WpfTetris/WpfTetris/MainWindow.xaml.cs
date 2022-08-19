@@ -15,6 +15,8 @@
     using System.Media;
     using System.IO.Compression;
     using System.Windows.Media.Animation;
+    using System.Text;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -48,17 +50,20 @@
 
         private bool isPaused = false;
         private bool isplayed = false;
-        private MediaPlayer pl = new MediaPlayer();
-       
+        private MediaPlayer playmove = new MediaPlayer();
+        private MediaPlayer playclick = new MediaPlayer();
+
+        private static double Volume = 0.5;
+
+
         private readonly Image[,] imageControls;
 
-        private GameState gameState = new GameState(gameLoop);
+        private GameState gameState = new GameState(gameLoop, Volume);
         
         public MainWindow()
         {
             InitializeComponent();
             imageControls = SetupGameCanvas(gameState.GameGrid);
-            pl.Volume = 0.05;
         }
 
         private Image[,] SetupGameCanvas(GameGrid grid)
@@ -169,87 +174,124 @@
         }
 
         
+        
+        bool IsGameStarted = false;
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (gameState.GameOver)
+            if (IsGameStarted)
             {
-                return;
-            }
-            if (isPaused)
-            {
-                
-                gameLoop.Stop();
-                if (e.Key != Key.Escape)
-                    e.Handled = true;
-                else Continue_Click(ContinueBut, e);
-            }
-            else
-                switch (e.Key)
+                if (isPaused)
                 {
-                    case Key.Left:
+
+                    gameLoop.Stop();
+                    if (e.Key != Key.Escape)
+                        e.Handled = true;
+                    else Continue_Click(ContinueBut, e);
+                }
+                else if (gameState.GameOver)
+                {
+                    return;
+                }
+                else if (!isPaused)
+                {
+                    if(e.Key == keys[0])
                         gameState.MoveBlockLeft();
-                        break;
-                    case Key.Right:
+                    if (e.Key == keys[1])
                         gameState.MoveBlockRight();
-                        break;
-                    case Key.Down:
+                    if (e.Key == keys[2])
                         gameState.MoveBlockDown();
-                        break;
-                    case Key.Up:
-                        gameState.RotateBlockCW();
-                        break;
-                    case Key.Z:
-                        gameState.RotateBlockCCW();
-                        break;
-                    case Key.C:
-                        gameState.HoldBlock();
-                        break;
-                    case Key.Space:
+                    if (e.Key == keys[3])
                         gameState.DropBlock();
-                        break;
-                    case Key.Escape:
+                    if (e.Key == keys[4])
+                        gameState.RotateBlockCCW();
+                    if (e.Key == keys[5])
+                        gameState.HoldBlock();
+                    if (e.Key == keys[6])
+                        gameState.RotateBlockCW();
+                    if (e.Key == Key.Escape)
                         if (!isPaused)
                         {
-
-                            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
-                            pl.Play();
+                            playclick.Play();
                             isPaused = true;
                             GamePause.Visibility = Visibility.Visible;
                             CurrentScoreText.Text = $"Score: {gameState.Score}";
                         }
-                        break;
-                    default:
-                        return;
                 }
+            }
         }
 
         private void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
-            gameState = new GameState(gameLoop);
+            gameState = new GameState(gameLoop, Volume);
             gameLoop.Interval = TimeSpan.FromMilliseconds(700);
             GameOverMenu.Visibility = Visibility.Hidden;
             GamePause.Visibility = Visibility.Hidden;
             MainMenu.Visibility = Visibility.Hidden;
             isPaused = false;
-            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
-            pl.Play();
+            PlayClick();
             t.Start();
             gameLoop.Start();
+            IsGameStarted = true;
 
         }
-
         private void Continue_Click(object sender, RoutedEventArgs e)
         {
             GamePause.Visibility = Visibility.Hidden;
             isPaused = false;
-            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
-            pl.Play();
+            PlayClick();
             gameLoop.Start();
         }
+        private void ApplyConfig()
+        {
+            LeftPosition.Content = keys[0];
+            RightPosition.Content = keys[1];
+            DownPosition.Content = keys[2];
+            Drop.Content = keys[3];
+            CW.Content = keys[6];
+            CCW.Content = keys[4];
+            Hold.Content = keys[5];
+            SliderVolume.Value = Volume;
+            Volume = SliderVolume.Value * 0.2;
+        }
+
+        private void ApplyDefaultConfig()
+        {
+            SliderVolume.Value = 2.5;
+            Volume *= 0.2;
+            keys.Add(Key.A);
+            keys.Add(Key.D);
+            keys.Add(Key.S);
+            keys.Add(Key.Space);
+            keys.Add(Key.Q);
+            keys.Add(Key.W);
+            keys.Add(Key.E);
+            LeftPosition.Content = Key.A;
+            RightPosition.Content = Key.D;
+            DownPosition.Content = Key.S;
+            Drop.Content = Key.Space;
+            CW.Content = Key.E;
+            CCW.Content = Key.Q;
+            Hold.Content = Key.W;
+        }
+
+        List<Key> keys;
+        Configuration configuration = new Configuration();
         DispatcherTimer t;
         static DispatcherTimer gameLoop;
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
+            keys = new List<Key>();
+            if (configuration.LoadConfig(ref keys, ref Volume))
+            {
+                ApplyConfig();
+            }
+            else 
+            {
+                ApplyDefaultConfig();
+            }
+
             t = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(20) };
             gameLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(700) };
             gameLoop.Tick += new EventHandler(GameLoop);
@@ -263,44 +305,60 @@
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
-            pl.Play();
+            PlayClick();
             Close();
+
+        }
+        private void LeaveOptions_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ZeroButtonsArePressed)
+            {
+                PlayClick();
+                Options.Visibility = Visibility.Hidden;
+                MainMenu.Visibility = Visibility.Visible;
+
+                configuration.SaveConfig(keys, SliderVolume.Value);
+                keys = new List<Key>();
+                configuration.LoadConfig(ref keys, ref Volume);
+                ApplyConfig();
+            }
         }
         private void MainMenu_Click(object sender, RoutedEventArgs e)
         {
-            //fixnotendgame
-            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
-            pl.Play();
+            PlayClick();
+            gameState = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            t.Stop();
+            gameLoop.Stop();
+            isPaused = true;
+            IsGameStarted = false;
             MainMenu.Visibility = Visibility.Visible;
         }
         private void StartGame_MouseMove(object sender, MouseEventArgs e)
         {
             if (!isplayed)
             {
-                pl.Open(new Uri("choocelement.wav", UriKind.Relative));
-                pl.Play();
+                playmove.Open(new Uri("choocelement.wav", UriKind.Relative));
+                playmove.Volume = Volume / 2.5;
                 isplayed = true;
+                playmove.Play();
+                PlayMove().WaitAsync(TimeSpan.FromMilliseconds(150));
             }
         }
-
         private void StartGame_MouseLeave(object sender, MouseEventArgs e)
         {
             isplayed = false;
         }
-
         private void Options_Click(object sender, RoutedEventArgs e)
         {
-
-            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
-            pl.Play();
+            PlayClick();
+            MainMenu.Visibility = Visibility.Hidden;
+            Options.Visibility = Visibility.Visible;
         }
-
         private void Leaders_Click(object sender, RoutedEventArgs e)
         {
-
-            pl.Open(new Uri("enterelement.wav", UriKind.Relative));
-            pl.Play();
+            PlayClick();
         }
 
         #region UI_Program
@@ -425,6 +483,84 @@
 
         #endregion
 
-    }
 
+        private async Task PlayMove()
+        {
+            await Task.Delay(100);            
+
+            playclick.Close();
+        }
+        private void PlayClick()
+        {
+            playclick.Close();
+            playclick.Open(new Uri("enterelement.wav", UriKind.Relative));
+            playclick.Volume = Volume;
+            playclick.Play();
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Volume = SliderVolume.Value * 0.2;
+            playclick.Close();
+            playclick.Open(new Uri("enterelement.wav", UriKind.Relative));
+            playclick.Volume = Volume;
+            playclick.Play();
+        }
+        bool ZeroButtonsArePressed = false;
+        private void OptionChange_Click(object sender, RoutedEventArgs e)
+        {   
+            if (!ZeroButtonsArePressed)
+            {
+                ((Button)sender).Content = " ";
+                ZeroButtonsArePressed = true;
+                PlayClick();
+            }
+        }
+
+        private void Options_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (LeftPosition.Content.Equals(" "))
+            {
+                keys[0] = e.Key;
+                LeftPosition.Content = e.Key.ToString();
+                ZeroButtonsArePressed = false;
+            }
+            else if (RightPosition.Content.ToString() == " ")
+            {
+                keys[1] = e.Key;
+                RightPosition.Content = e.Key.ToString();
+                ZeroButtonsArePressed = false;
+            }
+            else if (DownPosition.Content.ToString() == " ")
+            {
+                keys[2] = e.Key;
+                DownPosition.Content = e.Key.ToString();
+                ZeroButtonsArePressed = false;
+            }
+            else if (Drop.Content.ToString() == " ")
+            {
+                keys[3] = e.Key;
+                Drop.Content = e.Key.ToString();
+                ZeroButtonsArePressed = false;
+            }
+            else if (CCW.Content.ToString() == " ")
+            {
+                keys[4] = e.Key;
+                CCW.Content = e.Key.ToString();
+                ZeroButtonsArePressed = false;
+            }
+            else if (Hold.Content.ToString() == " ")
+            {
+                keys[5] = e.Key;
+                Hold.Content = e.Key.ToString();
+                ZeroButtonsArePressed = false;
+            }
+            else if (CW.Content.ToString() == " ")
+            {
+                keys[6] = e.Key;
+                CW.Content = e.Key.ToString();
+                ZeroButtonsArePressed = false;
+            }
+        }
+    }
 }
