@@ -2,7 +2,7 @@
 # WpfTetris based on .Net Windows Presentation Foundation
 
 Here is a game Tetris created with C# .Net 6.0 and WPF graphical subsystem
-# Appearance(Beta):
+# Appearance:
 # - Main Menu
 ![image](https://user-images.githubusercontent.com/66406936/185514554-631179e7-1721-4a14-850f-8c56a711596b.png)
 
