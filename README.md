@@ -1,3 +1,4 @@
+# Still pre-release version (Now the button Leaders does not works and Best score is not updates)
 # WpfTetris based on .Net Windows Presentation Foundation
 
 Here is a game Tetris created with C# .Net 6.0 and WPF graphical subsystem
