@@ -58,7 +58,7 @@
 
         private readonly Image[,] imageControls;
 
-        private GameState gameState = new GameState(gameLoop, Volume);
+        private GameState? gameState = new GameState(gameLoop, Volume);
         
         public MainWindow()
         {
@@ -156,20 +156,22 @@
 
         private void GameLoop(object sender, EventArgs e)
         {
-
-            if (!gameState.GameOver)
+            if (gameState != null)
             {
-                if (!isPaused)
+                if (!gameState.GameOver)
                 {
-                    gameState.MoveBlockDown();
-                    if(gameLoop.Interval > TimeSpan.FromMilliseconds(250))
-                        gameLoop.Interval = TimeSpan.FromMilliseconds((double)((0 - (gameState.Score * gameState.Score)) / 10) + 700);
+                    if (!isPaused)
+                    {
+                        gameState.MoveBlockDown();
+                        if (gameLoop.Interval > TimeSpan.FromMilliseconds(250))
+                            gameLoop.Interval = TimeSpan.FromMilliseconds((double)((0 - (gameState.Score * gameState.Score)) / 10) + 700);
+                    }
                 }
-            }
-            else
-            {
-                GameOverMenu.Visibility = Visibility.Visible;
-                FinalScoreText.Text = $"Score: {gameState.Score}";
+                else
+                {
+                    GameOverMenu.Visibility = Visibility.Visible;
+                    FinalScoreText.Text = $"Score: {gameState.Score}";
+                }
             }
         }
 
@@ -326,13 +328,14 @@
         private void MainMenu_Click(object sender, RoutedEventArgs e)
         {
             PlayClick();
-            gameState = null;
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            t.Stop();
             gameLoop.Stop();
+            t.Stop();
+            gameState = null;
             isPaused = true;
             IsGameStarted = false;
+            //stop the task
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             MainMenu.Visibility = Visibility.Visible;
         }
         private void StartGame_MouseMove(object sender, MouseEventArgs e)

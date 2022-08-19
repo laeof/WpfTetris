@@ -123,7 +123,10 @@ namespace Tetrisdotnet
                     {
                         await MoveRowDown(r, cleared).WaitAsync(timeout);
                     }
-                    catch (Exception e){ MessageBox.Show(e.Message); }
+                    catch (Exception e)
+                    { 
+                        MessageBox.Show(e.Message);
+                    }
                     gameLoop.Start();
                     if (AddScore)
                     {
